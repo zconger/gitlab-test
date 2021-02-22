@@ -2,17 +2,28 @@ stages:
   - build
   - test
 
+docker build:
+  script: docker build -t my-image:$CI_COMMIT_REF_SLUG .
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+
 build-code-job:
   stage: build
   script:
     - echo "Running build step"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
 
 test-code-job1:
   stage: test
   script:
     - echo "Test 1"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "test1"'
 
 test-code-job2:
   stage: test
   script:
     - echo "Test 2"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "test2"'
